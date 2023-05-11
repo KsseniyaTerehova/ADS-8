@@ -48,7 +48,7 @@ int Train::getLength() {
         while (countCageW != 0) {
             countOp += 1;
             countCageW -= 1;
-            CageWa = CageWg->prev;
+            CageWg = CageWg->prev;
         }
         if (CageWg->light == false) {
             return rezult;
