@@ -4,53 +4,53 @@ Train::Train(): first(nullptr), countOp(0) {}
 void Train::addCage(bool light) {
   Cage* CageW = new Cage;
   CageW->light = light;
-  CageW->n = nullptr;
-  CageW->p = nullptr;
+  CageW->next = nullptr;
+  CageW->prev = nullptr;
   if (first == nullptr) {
     first = CageW;
   } else {
-    if (first->n == nullptr) {
-      first->n = CageW;
-      first->p = CageW;
-      CageW->p = first;
-      CageW->n = first;
+    if (first->next == nullptr) {
+      first->next = CageW;
+      first->prev = CageW;
+      CageW->prev = first;
+      CageW->next = first;
     } else {
       Cage* cg = first;
-      while (cg->n != first) {
-        cg = cg->n;
+      while (cg->next != first) {
+        cg = cg->next;
       }
-      cg->n = CageW;
-      CageW->p = cg;
-      CageW->n = first;
-      first->p  = CageW;
+      cg->next = CageW;
+      CageW->prev = cg;
+      CageW->next = first;
+      first->prev  = CageW;
     }
   }
   countOp = 0;
 }
 int Train::getLength() {
-    Cage* CageWa = first;
-    if (CageWa->light == false) {
-        CageWa->light = true;
+    Cage* CageWg = first;
+    if (CageWg->light == false) {
+        CageWg->light = true;
     }
     int rezult = 0;
     int countCageW = 0;
     while (true) {
-        CageWa = CageWa->n;
+        CageWg = CageWg->next;
         countOp += 1;
         countCageW += 1;
-        while (CageWa->light == false) {
-            CageWa = CageWa->n;
+        while (CageWg->light == false) {
+            CageWg = CageWg->next;
             countOp += 1;
             countCageW += 1;
         }
-        CageWa->light = false;
+        CageWg->light = false;
         rezult = countCageW;
         while (countCageW != 0) {
             countOp += 1;
             countCageW -= 1;
-            CageWa = CageWa->p;
+            CageWa = CageWg->prev;
         }
-        if (CageWa->light == false) {
+        if (CageWg->light == false) {
             return rezult;
         }
     }
